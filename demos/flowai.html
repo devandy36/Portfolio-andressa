@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlowAI | Demo</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #ff2bd6;
+      --accent2: #ff77e9;
+      --text: #f0f0f0;
+      --muted: #8b8b8b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Space Mono", monospace;
+      background: radial-gradient(circle at top right, rgba(255, 43, 214, 0.16), transparent 45%), var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 32px 20px;
+    }
+    .wrap { max-width: 900px; margin: 0 auto; display: grid; gap: 16px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .header { display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; align-items: center; }
+    h1 { margin: 0; font-size: 1.35rem; }
+    p { color: var(--muted); margin: 8px 0 0; }
+    .back {
+      color: var(--accent2);
+      text-decoration: none;
+      border: 1px solid var(--accent2);
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .chat {
+      height: 380px;
+      overflow: auto;
+      display: grid;
+      gap: 10px;
+      padding-right: 4px;
+    }
+    .msg {
+      max-width: 80%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      line-height: 1.45;
+      font-size: 0.88rem;
+      background: #111;
+    }
+    .user { margin-left: auto; border-color: rgba(255, 119, 233, 0.35); }
+    .bot { margin-right: auto; }
+    .time {
+      display: block;
+      margin-top: 6px;
+      font-size: 0.68rem;
+      color: var(--muted);
+    }
+    .quick { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 6px; }
+    .quick button {
+      width: auto;
+      background: transparent;
+      color: var(--accent2);
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      padding: 8px 10px;
+      font-size: 0.72rem;
+      cursor: pointer;
+    }
+    form { display: flex; gap: 8px; margin-top: 10px; }
+    input, button[type="submit"] {
+      font-family: inherit;
+      border-radius: 8px;
+      padding: 11px;
+      border: 1px solid var(--border);
+      background: #111;
+      color: var(--text);
+    }
+    input { flex: 1; }
+    button[type="submit"] {
+      background: var(--accent);
+      color: #000;
+      border: none;
+      font-weight: 700;
+      cursor: pointer;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card header">
+      <div>
+        <h1>FlowAI | Demo</h1>
+        <p>Protótipo de assistente para atendimento inicial e qualificação.</p>
+      </div>
+      <a class="back" href="../index.html#projetos">Voltar ao portfólio</a>
+    </section>
+
+    <section class="card">
+      <div id="chat" class="chat"></div>
+      <div class="quick">
+        <button type="button" data-msg="Quero orçamento de site">Orçamento</button>
+        <button type="button" data-msg="Quais serviços vocês oferecem?">Serviços</button>
+        <button type="button" data-msg="Qual prazo médio de entrega?">Prazo</button>
+      </div>
+      <form id="form">
+        <input id="entrada" type="text" placeholder="Digite sua pergunta...">
+        <button type="submit">Enviar</button>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    const chat = document.getElementById('chat');
+    const form = document.getElementById('form');
+    const entrada = document.getElementById('entrada');
+    const quickButtons = document.querySelectorAll('.quick button');
+
+    function hora() {
+      return new Date().toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit' });
+    }
+
+    function addMsg(text, who = 'bot') {
+      const el = document.createElement('article');
+      el.className = `msg ${who}`;
+      el.innerHTML = `${text}<span class="time">${hora()}</span>`;
+      chat.appendChild(el);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function resposta(texto) {
+      const t = texto.toLowerCase();
+      if (t.includes('orçamento') || t.includes('orcamento') || t.includes('preço')) {
+        return 'Perfeito. Posso te ajudar com o orçamento. Me envie tipo de projeto, prazo e objetivo principal para montar uma proposta.';
+      }
+      if (t.includes('serviço') || t.includes('servico')) {
+        return 'Atuo com front-end, landing pages, dashboards, integrações com API e automações com IA para atendimento.';
+      }
+      if (t.includes('prazo')) {
+        return 'Projetos curtos costumam levar de 5 a 10 dias. Escopo maior varia conforme complexidade e integrações.';
+      }
+      if (t.includes('contato') || t.includes('whatsapp')) {
+        return 'Você pode falar comigo pelo WhatsApp: (11) 96061-3582 ou e-mail: andressa__duarte@hotmail.com.';
+      }
+      return 'Entendi. Posso seguir com atendimento inicial. Quer que eu te faça 3 perguntas para montar um briefing rápido?';
+    }
+
+    function enviar(texto) {
+      const clean = texto.trim();
+      if (!clean) return;
+      addMsg(clean, 'user');
+      setTimeout(() => addMsg(resposta(clean), 'bot'), 350);
+    }
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      enviar(entrada.value);
+      entrada.value = '';
+      entrada.focus();
+    });
+
+    quickButtons.forEach((btn) => {
+      btn.addEventListener('click', () => enviar(btn.dataset.msg));
+    });
+
+    addMsg('Olá. Sou o assistente FlowAI. Como posso ajudar no seu projeto hoje?', 'bot');
+  </script>
+</body>
+</html>

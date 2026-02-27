@@ -501,19 +501,41 @@
     }
 
     .project-link {
-      display: inline-block;
-      margin-top: 16px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       color: var(--accent2);
       text-decoration: none;
       font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 1px;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.2s;
+      border: 1px solid var(--accent2);
+      border-radius: 2px;
+      padding: 9px 12px;
+      transition: all 0.2s;
     }
 
     .project-link:hover {
-      border-color: var(--accent2);
+      background: rgba(255, 119, 233, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .project-link.project-link-code {
+      color: var(--text);
+      border-color: var(--border);
+    }
+
+    .project-link.project-link-code:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: rgba(255, 43, 214, 0.08);
+    }
+
+    .project-actions {
+      margin-top: 16px;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .project-result {
@@ -750,7 +772,10 @@
             e organização de horários em uma experiência simples para cliente e negócio.
           </p>
           <p class="project-result">Foco: reduzir atrito no processo de marcação.</p>
-          <a class="project-link" href="https://github.com/devandy36?tab=repositories" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a>
+          <div class="project-actions">
+            <a class="project-link" href="demos/agendapro.html" target="_blank" rel="noopener noreferrer">Ver projeto demo</a>
+            <a class="project-link project-link-code" href="https://github.com/devandy36/Portfolio-andressa" target="_blank" rel="noopener noreferrer">Ver código</a>
+          </div>
         </div>
       </div>
       <div class="project-card">
@@ -767,7 +792,10 @@
             e visualização clara para apoiar decisões de produto e negócio.
           </p>
           <p class="project-result">Foco: transformar dados em ação estratégica.</p>
-          <a class="project-link" href="https://github.com/devandy36?tab=repositories" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a>
+          <div class="project-actions">
+            <a class="project-link" href="demos/salesboard.html" target="_blank" rel="noopener noreferrer">Ver projeto demo</a>
+            <a class="project-link project-link-code" href="https://github.com/devandy36/Portfolio-andressa" target="_blank" rel="noopener noreferrer">Ver código</a>
+          </div>
         </div>
       </div>
       <div class="project-card">
@@ -784,7 +812,10 @@
             atendimento inicial e encaminhamento de solicitações recorrentes.
           </p>
           <p class="project-result">Foco: eficiência operacional com IA aplicada.</p>
-          <a class="project-link" href="https://github.com/devandy36?tab=repositories" target="_blank" rel="noopener noreferrer">Ver código no GitHub</a>
+          <div class="project-actions">
+            <a class="project-link" href="demos/flowai.html" target="_blank" rel="noopener noreferrer">Ver projeto demo</a>
+            <a class="project-link project-link-code" href="https://github.com/devandy36/Portfolio-andressa" target="_blank" rel="noopener noreferrer">Ver código</a>
+          </div>
         </div>
       </div>
     </div>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SalesBoard | Demo</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent: #ff2bd6;
+      --accent2: #ff77e9;
+      --text: #f0f0f0;
+      --muted: #8b8b8b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Space Mono", monospace;
+      background: radial-gradient(circle at top right, rgba(255, 43, 214, 0.16), transparent 45%), var(--bg);
+      color: var(--text);
+      padding: 32px 20px;
+    }
+    .wrap { max-width: 980px; margin: 0 auto; display: grid; gap: 18px; }
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 18px;
+    }
+    .header { display: flex; justify-content: space-between; align-items: center; gap: 10px; flex-wrap: wrap; }
+    h1, h2 { margin: 0; }
+    p { margin: 8px 0 0; color: var(--muted); }
+    .back {
+      color: var(--accent2);
+      text-decoration: none;
+      border: 1px solid var(--accent2);
+      padding: 9px 12px;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .filters { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px; }
+    label { font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 6px; }
+    select {
+      width: 100%;
+      background: #111;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 10px;
+      font-family: inherit;
+    }
+    .kpis { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; }
+    .kpi {
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 14px;
+    }
+    .kpi small { color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+    .kpi strong { display: block; margin-top: 8px; font-size: 1.4rem; }
+    .rows { display: grid; gap: 10px; margin-top: 8px; }
+    .row {
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+    }
+    .bar-wrap {
+      background: #0a0a0a;
+      border: 1px solid var(--border);
+      border-radius: 999px;
+      height: 10px;
+      margin-top: 8px;
+      overflow: hidden;
+    }
+    .bar {
+      height: 100%;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      width: 0;
+      transition: width 0.3s;
+    }
+    .line {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <section class="card header">
+      <div>
+        <h1>SalesBoard | Demo</h1>
+        <p>Dashboard com leitura de desempenho comercial por período.</p>
+      </div>
+      <a class="back" href="../index.html#projetos">Voltar ao portfólio</a>
+    </section>
+
+    <section class="card">
+      <h2>Filtros</h2>
+      <div class="filters">
+        <div>
+          <label for="mes">Mês</label>
+          <select id="mes">
+            <option value="todos">Todos</option>
+            <option value="jan">Janeiro</option>
+            <option value="fev">Fevereiro</option>
+            <option value="mar">Março</option>
+          </select>
+        </div>
+        <div>
+          <label for="canal">Canal</label>
+          <select id="canal">
+            <option value="todos">Todos</option>
+            <option value="site">Site</option>
+            <option value="instagram">Instagram</option>
+            <option value="whatsapp">WhatsApp</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Resumo</h2>
+      <div class="kpis">
+        <article class="kpi"><small>Faturamento</small><strong id="faturamento">R$ 0</strong></article>
+        <article class="kpi"><small>Pedidos</small><strong id="pedidos">0</strong></article>
+        <article class="kpi"><small>Ticket médio</small><strong id="ticket">R$ 0</strong></article>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Vendas por canal</h2>
+      <div id="linhas" class="rows"></div>
+    </section>
+  </div>
+
+  <script>
+    const dados = [
+      { mes: 'jan', canal: 'site', pedidos: 24, faturamento: 8200 },
+      { mes: 'jan', canal: 'instagram', pedidos: 18, faturamento: 6100 },
+      { mes: 'jan', canal: 'whatsapp', pedidos: 12, faturamento: 3900 },
+      { mes: 'fev', canal: 'site', pedidos: 28, faturamento: 9800 },
+      { mes: 'fev', canal: 'instagram', pedidos: 16, faturamento: 5500 },
+      { mes: 'fev', canal: 'whatsapp', pedidos: 20, faturamento: 7200 },
+      { mes: 'mar', canal: 'site', pedidos: 30, faturamento: 10500 },
+      { mes: 'mar', canal: 'instagram', pedidos: 22, faturamento: 7600 },
+      { mes: 'mar', canal: 'whatsapp', pedidos: 25, faturamento: 8400 }
+    ];
+
+    const mesEl = document.getElementById('mes');
+    const canalEl = document.getElementById('canal');
+    const faturamentoEl = document.getElementById('faturamento');
+    const pedidosEl = document.getElementById('pedidos');
+    const ticketEl = document.getElementById('ticket');
+    const linhasEl = document.getElementById('linhas');
+
+    function money(v) {
+      return v.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    function filtrar() {
+      return dados.filter((d) => {
+        const okMes = mesEl.value === 'todos' || d.mes === mesEl.value;
+        const okCanal = canalEl.value === 'todos' || d.canal === canalEl.value;
+        return okMes && okCanal;
+      });
+    }
+
+    function render() {
+      const subset = filtrar();
+      const totalFat = subset.reduce((a, b) => a + b.faturamento, 0);
+      const totalPed = subset.reduce((a, b) => a + b.pedidos, 0);
+      const ticket = totalPed ? totalFat / totalPed : 0;
+
+      faturamentoEl.textContent = money(totalFat);
+      pedidosEl.textContent = totalPed;
+      ticketEl.textContent = money(ticket);
+
+      const porCanal = subset.reduce((acc, item) => {
+        acc[item.canal] = (acc[item.canal] || 0) + item.faturamento;
+        return acc;
+      }, {});
+
+      const max = Math.max(...Object.values(porCanal), 1);
+      linhasEl.innerHTML = Object.entries(porCanal).map(([canal, valor]) => {
+        const largura = Math.round((valor / max) * 100);
+        return `
+          <article class="row">
+            <div class="line"><strong>${canal}</strong><span>${money(valor)}</span></div>
+            <div class="bar-wrap"><div class="bar" style="width:${largura}%"></div></div>
+          </article>
+        `;
+      }).join('') || '<p style="color:#8b8b8b">Sem dados para esse filtro.</p>';
+    }
+
+    mesEl.addEventListener('change', render);
+    canalEl.addEventListener('change', render);
+    render();
+  </script>
+</body>
+</html>
