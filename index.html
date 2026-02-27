@@ -456,20 +456,48 @@
     }
 
     .project-thumb {
-      height: 160px;
-      background: #101010;
+      position: relative;
+      height: 190px;
+      background: #0f0f0f;
       border-bottom: 1px solid var(--border);
+      overflow: hidden;
     }
 
-    .project-thumb img {
-      width: 100%;
-      height: 100%;
-      display: block;
-      object-fit: cover;
+    .project-thumb::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, 0.38), transparent 35%);
+      pointer-events: none;
+    }
+
+    .project-preview {
+      width: 140%;
+      height: 140%;
+      border: 0;
+      transform: scale(0.715);
+      transform-origin: 0 0;
+      filter: contrast(1.06) saturate(0.88);
+      pointer-events: none;
+    }
+
+    .project-badge {
+      position: absolute;
+      z-index: 2;
+      top: 10px;
+      left: 10px;
+      padding: 4px 8px;
+      font-size: 0.66rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: #0d0d0d;
+      background: var(--accent2);
+      border-radius: 2px;
+      font-weight: 700;
     }
 
     .project-info {
-      padding: 20px;
+      padding: 18px;
     }
 
     .project-tags {
@@ -494,32 +522,35 @@
       font-family: var(--font-display);
       font-weight: 600;
       font-size: 1.1rem;
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
     .project-desc {
       color: var(--muted);
-      font-size: 0.8rem;
-      line-height: 1.5;
+      font-size: 0.78rem;
+      line-height: 1.55;
+      min-height: 74px;
     }
 
     .project-link {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      color: var(--accent2);
+      color: #111;
       text-decoration: none;
       font-size: 0.78rem;
       text-transform: uppercase;
       letter-spacing: 1px;
       border: 1px solid var(--accent2);
       border-radius: 2px;
-      padding: 9px 12px;
+      padding: 10px 13px;
+      background: var(--accent2);
       transition: all 0.2s;
+      font-weight: 700;
     }
 
     .project-link:hover {
-      background: rgba(255, 119, 233, 0.12);
+      background: #ff9cf0;
       transform: translateY(-2px);
     }
 
@@ -530,12 +561,7 @@
       flex-wrap: wrap;
     }
 
-    .project-result {
-      margin-top: 10px;
-      color: var(--text);
-      font-size: 0.75rem;
-      line-height: 1.4;
-    }
+    .project-result { display: none; }
 
     /* ===== CONTATO ===== */
     #contato {
@@ -829,7 +855,8 @@
     <div class="projects-grid">
       <div class="project-card">
         <div class="project-thumb">
-          <img src="assets/projects/agendapro.svg" alt="Prévia da interface do projeto AgendaPro">
+          <span class="project-badge">Preview ao vivo</span>
+          <iframe class="project-preview" src="demos/agendapro.html" title="Prévia da demo AgendaPro" loading="lazy"></iframe>
         </div>
         <div class="project-info">
           <div class="project-tags">
@@ -839,18 +866,18 @@
           </div>
           <div class="project-title">AgendaPro | Sistema de Agendamentos</div>
           <p class="project-desc">
-            Interface para agendamentos de serviços com calendário, confirmação
-            e organização de horários em uma experiência simples para cliente e negócio.
+            Agenda digital com cadastro de cliente, data e serviço para organizar horários
+            de forma prática e rápida.
           </p>
-          <p class="project-result">Foco: reduzir atrito no processo de marcação.</p>
           <div class="project-actions">
-            <a class="project-link" href="demos/agendapro.html" target="_blank" rel="noopener noreferrer">Abrir demo em funcionamento</a>
+            <a class="project-link" href="demos/agendapro.html" target="_blank" rel="noopener noreferrer">Abrir demo</a>
           </div>
         </div>
       </div>
       <div class="project-card">
         <div class="project-thumb">
-          <img src="assets/projects/salesboard.svg" alt="Prévia da interface do projeto SalesBoard">
+          <span class="project-badge">Preview ao vivo</span>
+          <iframe class="project-preview" src="demos/salesboard.html" title="Prévia da demo SalesBoard" loading="lazy"></iframe>
         </div>
         <div class="project-info">
           <div class="project-tags">
@@ -860,18 +887,18 @@
           </div>
           <div class="project-title">SalesBoard | Dashboard Comercial</div>
           <p class="project-desc">
-            Painel para leitura de indicadores de vendas com filtros, resumo por período
-            e visualização clara para apoiar decisões de produto e negócio.
+            Dashboard de vendas com filtros de período e canal para visualizar
+            faturamento, pedidos e ticket médio.
           </p>
-          <p class="project-result">Foco: transformar dados em ação estratégica.</p>
           <div class="project-actions">
-            <a class="project-link" href="demos/salesboard.html" target="_blank" rel="noopener noreferrer">Abrir demo em funcionamento</a>
+            <a class="project-link" href="demos/salesboard.html" target="_blank" rel="noopener noreferrer">Abrir demo</a>
           </div>
         </div>
       </div>
       <div class="project-card">
         <div class="project-thumb">
-          <img src="assets/projects/flowai.svg" alt="Prévia da interface do projeto FlowAI">
+          <span class="project-badge">Preview ao vivo</span>
+          <iframe class="project-preview" src="demos/flowai.html" title="Prévia da demo FlowAI" loading="lazy"></iframe>
         </div>
         <div class="project-info">
           <div class="project-tags">
@@ -881,12 +908,11 @@
           </div>
           <div class="project-title">FlowAI | Assistente de Atendimento</div>
           <p class="project-desc">
-            Projeto de automação com respostas orientadas por contexto para acelerar
-            atendimento inicial e encaminhamento de solicitações recorrentes.
+            Assistente virtual para atendimento inicial com respostas rápidas,
+            roteando pedidos e dúvidas mais comuns.
           </p>
-          <p class="project-result">Foco: eficiência operacional com IA aplicada.</p>
           <div class="project-actions">
-            <a class="project-link" href="demos/flowai.html" target="_blank" rel="noopener noreferrer">Abrir demo em funcionamento</a>
+            <a class="project-link" href="demos/flowai.html" target="_blank" rel="noopener noreferrer">Abrir demo</a>
           </div>
         </div>
       </div>
