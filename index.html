@@ -457,12 +457,15 @@
 
     .project-thumb {
       height: 160px;
-      background: linear-gradient(135deg, var(--border), #1f1f1f);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 3rem;
+      background: #101010;
       border-bottom: 1px solid var(--border);
+    }
+
+    .project-thumb img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
     }
 
     .project-info {
@@ -586,6 +589,82 @@
       color: var(--accent2);
     }
 
+    .contact-form {
+      max-width: 760px;
+      margin: 24px auto 0;
+      display: grid;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .contact-form-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .contact-field {
+      display: grid;
+      gap: 6px;
+    }
+
+    .contact-field label {
+      font-size: 0.75rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--muted);
+    }
+
+    .contact-field input,
+    .contact-field textarea {
+      width: 100%;
+      background: #101010;
+      border: 1px solid var(--border);
+      color: var(--text);
+      padding: 12px;
+      border-radius: 2px;
+      font-family: var(--font-mono);
+      font-size: 0.86rem;
+    }
+
+    .contact-field textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .contact-submit {
+      justify-self: start;
+      background: var(--accent);
+      color: #000;
+      border: 0;
+      border-radius: 2px;
+      padding: 12px 20px;
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    .contact-submit:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px rgba(255, 43, 214, 0.35);
+    }
+
+    .contact-status {
+      margin-top: 2px;
+      font-size: 0.8rem;
+      color: var(--muted);
+      min-height: 1.2em;
+      text-align: left;
+    }
+
+    .contact-status.is-success {
+      color: var(--accent2);
+    }
+
     a:focus-visible,
     button:focus-visible {
       outline: 2px solid var(--accent2);
@@ -638,6 +717,7 @@
       .avatar-box { width: 200px; height: 200px; font-size: 5rem; }
 
       section { padding: 60px 20px; }
+      .contact-form-grid { grid-template-columns: 1fr; }
       .contact-email { overflow-wrap: anywhere; }
       .social-links { flex-wrap: wrap; }
       footer { flex-direction: column; gap: 8px; text-align: center; }
@@ -748,7 +828,9 @@
     <h2 class="section-title">Projetos Reais</h2>
     <div class="projects-grid">
       <div class="project-card">
-        <div class="project-thumb">📆</div>
+        <div class="project-thumb">
+          <img src="assets/projects/agendapro.svg" alt="Prévia da interface do projeto AgendaPro">
+        </div>
         <div class="project-info">
           <div class="project-tags">
             <span class="tag">React</span>
@@ -767,7 +849,9 @@
         </div>
       </div>
       <div class="project-card">
-        <div class="project-thumb">📊</div>
+        <div class="project-thumb">
+          <img src="assets/projects/salesboard.svg" alt="Prévia da interface do projeto SalesBoard">
+        </div>
         <div class="project-info">
           <div class="project-tags">
             <span class="tag">JS</span>
@@ -786,7 +870,9 @@
         </div>
       </div>
       <div class="project-card">
-        <div class="project-thumb">🤖</div>
+        <div class="project-thumb">
+          <img src="assets/projects/flowai.svg" alt="Prévia da interface do projeto FlowAI">
+        </div>
         <div class="project-info">
           <div class="project-tags">
             <span class="tag">JS</span>
@@ -820,6 +906,28 @@
     <a href="mailto:andressa__duarte@hotmail.com" class="contact-email">
       andressa__duarte@hotmail.com →
     </a>
+    <form class="contact-form" action="https://formsubmit.co/andressa__duarte@hotmail.com" method="POST">
+      <input type="hidden" name="_subject" value="Novo contato pelo portfolio - Andressa Duarte">
+      <input type="hidden" name="_captcha" value="false">
+      <input type="hidden" name="_template" value="table">
+      <input type="hidden" name="_next" value="https://devandy36.github.io/Portfolio-andressa/?enviado=1#contato">
+      <div class="contact-form-grid">
+        <div class="contact-field">
+          <label for="nome">Nome</label>
+          <input id="nome" name="nome" type="text" required placeholder="Seu nome">
+        </div>
+        <div class="contact-field">
+          <label for="email">E-mail</label>
+          <input id="email" name="email" type="email" required placeholder="seuemail@dominio.com">
+        </div>
+      </div>
+      <div class="contact-field">
+        <label for="mensagem">Mensagem</label>
+        <textarea id="mensagem" name="mensagem" required placeholder="Me conte sobre seu projeto, prazo e objetivo."></textarea>
+      </div>
+      <button class="contact-submit" type="submit">Enviar mensagem</button>
+      <p id="contact-status" class="contact-status" aria-live="polite"></p>
+    </form>
     <div class="social-links">
       <a href="https://github.com/devandy36" target="_blank" rel="noopener noreferrer" class="social-link">GitHub</a>
       <a href="https://wa.me/5511960613582" target="_blank" rel="noopener noreferrer" class="social-link">WhatsApp</a>
@@ -852,6 +960,13 @@
         menuButton.setAttribute('aria-expanded', 'false');
       });
     });
+
+    const contactStatus = document.getElementById('contact-status');
+    const params = new URLSearchParams(window.location.search);
+    if (contactStatus && params.get('enviado') === '1') {
+      contactStatus.textContent = 'Mensagem enviada com sucesso. Vou retornar em breve.';
+      contactStatus.classList.add('is-success');
+    }
   </script>
 
 </body>
