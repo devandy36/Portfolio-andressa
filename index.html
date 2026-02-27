@@ -456,44 +456,19 @@
     }
 
     .project-thumb {
-      position: relative;
-      height: 190px;
+      height: 210px;
       background: #0f0f0f;
       border-bottom: 1px solid var(--border);
       overflow: hidden;
     }
 
-    .project-thumb::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0, 0, 0, 0.38), transparent 35%);
-      pointer-events: none;
-    }
-
     .project-preview {
-      width: 140%;
-      height: 140%;
+      width: 100%;
+      height: 100%;
       border: 0;
-      transform: scale(0.715);
-      transform-origin: 0 0;
-      filter: contrast(1.06) saturate(0.88);
+      display: block;
+      background: #0d0d0d;
       pointer-events: none;
-    }
-
-    .project-badge {
-      position: absolute;
-      z-index: 2;
-      top: 10px;
-      left: 10px;
-      padding: 4px 8px;
-      font-size: 0.66rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      color: #0d0d0d;
-      background: var(--accent2);
-      border-radius: 2px;
-      font-weight: 700;
     }
 
     .project-info {
@@ -855,7 +830,6 @@
     <div class="projects-grid">
       <div class="project-card">
         <div class="project-thumb">
-          <span class="project-badge">Preview ao vivo</span>
           <iframe class="project-preview" src="demos/agendapro.html" title="Prévia da demo AgendaPro" loading="lazy"></iframe>
         </div>
         <div class="project-info">
@@ -876,7 +850,6 @@
       </div>
       <div class="project-card">
         <div class="project-thumb">
-          <span class="project-badge">Preview ao vivo</span>
           <iframe class="project-preview" src="demos/salesboard.html" title="Prévia da demo SalesBoard" loading="lazy"></iframe>
         </div>
         <div class="project-info">
@@ -897,7 +870,6 @@
       </div>
       <div class="project-card">
         <div class="project-thumb">
-          <span class="project-badge">Preview ao vivo</span>
           <iframe class="project-preview" src="demos/flowai.html" title="Prévia da demo FlowAI" loading="lazy"></iframe>
         </div>
         <div class="project-info">
