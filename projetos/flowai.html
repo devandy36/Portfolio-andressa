@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FlowAI | Detalhes</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent2: #ff77e9;
+      --text: #f0f0f0;
+      --muted: #8c8c8c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Space Mono", monospace;
+      color: var(--text);
+      background: radial-gradient(circle at top right, rgba(255,43,214,0.16), transparent 40%), var(--bg);
+      padding: 32px 20px;
+    }
+    .wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 18px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+    h1, h2 { margin: 0; font-family: "Syne", sans-serif; }
+    p { margin: 10px 0 0; color: var(--muted); line-height: 1.7; }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .btn { text-decoration: none; border: 1px solid var(--accent2); color: #111; background: var(--accent2); padding: 10px 14px; border-radius: 4px; text-transform: uppercase; font-size: 0.76rem; letter-spacing: 1px; font-weight: 700; }
+    .btn.secondary { background: transparent; color: var(--text); border-color: var(--border); font-weight: 500; }
+    ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>FlowAI | Assistente de Atendimento</h1>
+      <p>Protótipo de atendimento inicial com respostas orientadas por intenção para acelerar triagem e direcionamento.</p>
+      <div class="links">
+        <a class="btn" href="../demos/flowai.html" target="_blank" rel="noopener noreferrer">Ver demo</a>
+        <a class="btn secondary" href="../index.html#projetos">Voltar ao portfólio</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Stack</h2>
+      <ul>
+        <li>JavaScript para lógica conversacional</li>
+        <li>Regras de intenção com respostas contextuais</li>
+        <li>UI de chat otimizada para clareza</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Entregas</h2>
+      <ul>
+        <li>Sugestões rápidas de mensagem</li>
+        <li>Fluxo de conversação com respostas automáticas</li>
+        <li>Tratamento de cenários de orçamento, prazo e serviços</li>
+        <li>Base para evolução com integração de IA real</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Resultado</h2>
+      <p>Redução do tempo de resposta inicial e experiência mais fluida no atendimento digital.</p>
+    </section>
+  </main>
+</body>
+</html>

@@ -450,16 +450,18 @@
     /* ===== PROJETOS ===== */
     .projects-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 24px;
     }
 
     .project-card {
       background: var(--surface);
       border: 1px solid var(--border);
-      border-radius: 4px;
+      border-radius: 10px;
       overflow: hidden;
       transition: all 0.2s;
+      display: flex;
+      flex-direction: column;
     }
 
     .project-card:hover {
@@ -468,10 +470,20 @@
     }
 
     .project-thumb {
-      height: 210px;
+      aspect-ratio: 16 / 9;
       background: #dbe4f1;
       border-bottom: 1px solid var(--border);
       overflow: hidden;
+    }
+
+    .project-thumb-btn {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      background: transparent;
+      cursor: zoom-in;
     }
 
     .project-thumb img {
@@ -482,14 +494,16 @@
     }
 
     .project-info {
-      padding: 18px;
+      padding: 16px 18px 18px;
+      display: grid;
+      gap: 10px;
     }
 
     .project-tags {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 12px;
+      margin-bottom: 0;
     }
 
     .tag {
@@ -506,15 +520,19 @@
     .project-title {
       font-family: var(--font-display);
       font-weight: 600;
-      font-size: 1.1rem;
-      margin-bottom: 10px;
+      font-size: 1.06rem;
+      margin-bottom: 0;
     }
 
     .project-desc {
       color: var(--muted);
-      font-size: 0.78rem;
-      line-height: 1.55;
-      min-height: 74px;
+      font-size: 0.8rem;
+      line-height: 1.45;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      min-height: 46px;
     }
 
     .project-link {
@@ -528,7 +546,7 @@
       letter-spacing: 1px;
       border: 1px solid var(--accent2);
       border-radius: 2px;
-      padding: 10px 13px;
+      padding: 10px 14px;
       background: var(--accent2);
       transition: all 0.2s;
       font-weight: 700;
@@ -539,14 +557,99 @@
       transform: translateY(-2px);
     }
 
+    .project-link.project-link-secondary {
+      color: var(--text);
+      background: transparent;
+      border-color: var(--border);
+      font-weight: 500;
+    }
+
+    .project-link.project-link-secondary:hover {
+      color: var(--accent2);
+      border-color: var(--accent2);
+      background: rgba(255, 119, 233, 0.08);
+    }
+
     .project-actions {
-      margin-top: 16px;
+      margin-top: 2px;
       display: flex;
       gap: 10px;
       flex-wrap: wrap;
     }
 
     .project-result { display: none; }
+
+    .preview-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 220;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+
+    .preview-modal.is-open {
+      display: flex;
+    }
+
+    .preview-backdrop {
+      position: absolute;
+      inset: 0;
+      border: 0;
+      background: rgba(5, 5, 8, 0.82);
+      cursor: default;
+    }
+
+    .preview-dialog {
+      position: relative;
+      z-index: 1;
+      width: min(1100px, 100%);
+      margin: 0;
+      background: #0f0f10;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .preview-dialog img {
+      width: 100%;
+      display: block;
+      max-height: calc(100vh - 140px);
+      object-fit: contain;
+      background: #0d0d0d;
+    }
+
+    .preview-caption {
+      padding: 12px 16px;
+      font-size: 0.82rem;
+      color: var(--muted);
+      background: #121212;
+      border-top: 1px solid var(--border);
+    }
+
+    .preview-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      border: 1px solid var(--border);
+      background: rgba(12, 12, 12, 0.92);
+      color: var(--text);
+      padding: 8px 10px;
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      cursor: pointer;
+    }
+
+    .preview-close:hover {
+      border-color: var(--accent2);
+      color: var(--accent2);
+    }
+
+    @media (max-width: 980px) {
+      .projects-grid { grid-template-columns: 1fr; }
+    }
 
     /* ===== CONTATO ===== */
     #contato {
@@ -726,6 +829,8 @@
       .hero-visual { order: -1; }
       .avatar-wrap { width: 200px; height: 200px; }
       .avatar-box { width: 200px; height: 200px; font-size: 5rem; }
+      .project-actions { width: 100%; }
+      .project-link { flex: 1; }
 
       section { padding: 60px 20px; }
       .contact-form-grid { grid-template-columns: 1fr; }
@@ -842,7 +947,9 @@
     <div class="projects-grid">
       <div class="project-card">
         <div class="project-thumb">
-          <img src="assets/projects/agendapro-ui.svg" alt="Interface do projeto AgendaPro">
+          <button class="project-thumb-btn" type="button" data-preview="assets/projects/agendapro-ui.svg" data-title="AgendaPro">
+            <img src="assets/projects/agendapro-ui.svg" alt="Interface do projeto AgendaPro">
+          </button>
         </div>
         <div class="project-info">
           <div class="project-tags">
@@ -851,18 +958,18 @@
             <span class="tag">UX</span>
           </div>
           <div class="project-title">AgendaPro | Sistema de Agendamentos</div>
-          <p class="project-desc">
-            Agenda digital com cadastro de cliente, data e serviço para organizar horários
-            de forma prática e rápida.
-          </p>
+          <p class="project-desc">Agenda digital para gestão de clientes, horários e serviços em uma experiência objetiva.</p>
           <div class="project-actions">
             <a class="project-link" href="demos/agendapro.html" target="_blank" rel="noopener noreferrer">Abrir demo</a>
+            <a class="project-link project-link-secondary" href="projetos/agendapro.html">Ver detalhes</a>
           </div>
         </div>
       </div>
       <div class="project-card">
         <div class="project-thumb">
-          <img src="assets/projects/salesboard-ui.svg" alt="Interface do projeto SalesBoard">
+          <button class="project-thumb-btn" type="button" data-preview="assets/projects/salesboard-ui.svg" data-title="SalesBoard">
+            <img src="assets/projects/salesboard-ui.svg" alt="Interface do projeto SalesBoard">
+          </button>
         </div>
         <div class="project-info">
           <div class="project-tags">
@@ -871,18 +978,18 @@
             <span class="tag">Dashboard</span>
           </div>
           <div class="project-title">SalesBoard | Dashboard Comercial</div>
-          <p class="project-desc">
-            Dashboard de vendas com filtros de período e canal para visualizar
-            faturamento, pedidos e ticket médio.
-          </p>
+          <p class="project-desc">Painel de vendas com filtros, indicadores e leitura rápida para apoiar decisões comerciais.</p>
           <div class="project-actions">
             <a class="project-link" href="demos/salesboard.html" target="_blank" rel="noopener noreferrer">Abrir demo</a>
+            <a class="project-link project-link-secondary" href="projetos/salesboard.html">Ver detalhes</a>
           </div>
         </div>
       </div>
       <div class="project-card">
         <div class="project-thumb">
-          <img src="assets/projects/flowai-ui.svg" alt="Interface do projeto FlowAI">
+          <button class="project-thumb-btn" type="button" data-preview="assets/projects/flowai-ui.svg" data-title="FlowAI">
+            <img src="assets/projects/flowai-ui.svg" alt="Interface do projeto FlowAI">
+          </button>
         </div>
         <div class="project-info">
           <div class="project-tags">
@@ -891,17 +998,24 @@
             <span class="tag">Automação</span>
           </div>
           <div class="project-title">FlowAI | Assistente de Atendimento</div>
-          <p class="project-desc">
-            Assistente virtual para atendimento inicial com respostas rápidas,
-            roteando pedidos e dúvidas mais comuns.
-          </p>
+          <p class="project-desc">Assistente virtual para atendimento inicial, triagem de solicitações e ganho de produtividade.</p>
           <div class="project-actions">
             <a class="project-link" href="demos/flowai.html" target="_blank" rel="noopener noreferrer">Abrir demo</a>
+            <a class="project-link project-link-secondary" href="projetos/flowai.html">Ver detalhes</a>
           </div>
         </div>
       </div>
     </div>
   </section>
+
+  <div id="project-preview-modal" class="preview-modal" aria-hidden="true">
+    <button class="preview-backdrop" type="button" aria-label="Fechar visualização"></button>
+    <figure class="preview-dialog" role="dialog" aria-modal="true" aria-label="Prévia de projeto">
+      <button id="preview-close" class="preview-close" type="button">Fechar</button>
+      <img id="preview-image" src="" alt="">
+      <figcaption id="preview-caption" class="preview-caption"></figcaption>
+    </figure>
+  </div>
 
   <!-- CONTATO -->
   <section id="contato">
@@ -969,6 +1083,44 @@
         nav.classList.remove('nav-open');
         menuButton.setAttribute('aria-expanded', 'false');
       });
+    });
+
+    const previewModal = document.getElementById('project-preview-modal');
+    const previewImage = document.getElementById('preview-image');
+    const previewCaption = document.getElementById('preview-caption');
+    const previewClose = document.getElementById('preview-close');
+    const previewBackdrop = document.querySelector('.preview-backdrop');
+    const previewButtons = document.querySelectorAll('.project-thumb-btn');
+
+    function closePreview() {
+      previewModal.classList.remove('is-open');
+      previewModal.setAttribute('aria-hidden', 'true');
+      previewImage.src = '';
+      previewImage.alt = '';
+      previewCaption.textContent = '';
+      document.body.style.overflow = '';
+    }
+
+    previewButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const src = btn.dataset.preview;
+        const title = btn.dataset.title || 'Projeto';
+        previewImage.src = src;
+        previewImage.alt = `Prévia ampliada do projeto ${title}`;
+        previewCaption.textContent = `${title} - prévia de interface`;
+        previewModal.classList.add('is-open');
+        previewModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+      });
+    });
+
+    previewClose.addEventListener('click', closePreview);
+    previewBackdrop.addEventListener('click', closePreview);
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape' && previewModal.classList.contains('is-open')) {
+        closePreview();
+      }
     });
 
     const contactStatus = document.getElementById('contact-status');

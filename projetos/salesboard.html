@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SalesBoard | Detalhes</title>
+  <style>
+    :root {
+      --bg: #0d0d0d;
+      --surface: #161616;
+      --border: #2a2a2a;
+      --accent2: #ff77e9;
+      --text: #f0f0f0;
+      --muted: #8c8c8c;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Space Mono", monospace;
+      color: var(--text);
+      background: radial-gradient(circle at top right, rgba(255,43,214,0.16), transparent 40%), var(--bg);
+      padding: 32px 20px;
+    }
+    .wrap { max-width: 1000px; margin: 0 auto; display: grid; gap: 18px; }
+    .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
+    h1, h2 { margin: 0; font-family: "Syne", sans-serif; }
+    p { margin: 10px 0 0; color: var(--muted); line-height: 1.7; }
+    .links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .btn { text-decoration: none; border: 1px solid var(--accent2); color: #111; background: var(--accent2); padding: 10px 14px; border-radius: 4px; text-transform: uppercase; font-size: 0.76rem; letter-spacing: 1px; font-weight: 700; }
+    .btn.secondary { background: transparent; color: var(--text); border-color: var(--border); font-weight: 500; }
+    ul { margin: 10px 0 0; padding-left: 18px; color: var(--muted); line-height: 1.8; }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="card">
+      <h1>SalesBoard | Dashboard Comercial</h1>
+      <p>Dashboard para leitura de desempenho comercial com foco em tomada de decisão orientada por dados.</p>
+      <div class="links">
+        <a class="btn" href="../demos/salesboard.html" target="_blank" rel="noopener noreferrer">Ver demo</a>
+        <a class="btn secondary" href="../index.html#projetos">Voltar ao portfólio</a>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Stack</h2>
+      <ul>
+        <li>JavaScript para filtros e cálculos de KPIs</li>
+        <li>HTML/CSS para visualização estruturada</li>
+        <li>Modelagem de dados simulando contexto real</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Entregas</h2>
+      <ul>
+        <li>Filtro por período e canal</li>
+        <li>Indicadores: faturamento, pedidos e ticket médio</li>
+        <li>Resumo visual por canal com barras proporcionais</li>
+        <li>Interface otimizada para leitura rápida</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Resultado</h2>
+      <p>Visão executiva mais clara sobre performance, facilitando priorização de ações comerciais.</p>
+    </section>
+  </main>
+</body>
+</html>
