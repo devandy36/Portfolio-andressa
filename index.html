@@ -103,6 +103,10 @@
       from { transform: rotate(0deg); }
       to   { transform: rotate(360deg); }
     }
+    @keyframes floatPortrait {
+      0%, 100% { transform: translateY(0) scale(1.05); }
+      50% { transform: translateY(-6px) scale(1.09); }
+    }
 
     .skip-link {
       position: absolute;
@@ -336,14 +340,22 @@
       width: 280px;
       height: 280px;
       border-radius: 50%;
-      background: var(--surface);
+      background: #101010;
       border: 1px solid var(--border);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 7rem;
       position: relative;
       overflow: hidden;
+    }
+
+    .avatar-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 26%;
+      transform: scale(1.05);
+      animation: floatPortrait 7.5s ease-in-out infinite;
     }
 
     .avatar-box::after {
@@ -773,7 +785,9 @@
       <div class="hero-visual">
         <div class="avatar-wrap">
           <div class="avatar-ring"></div>
-          <div class="avatar-box">👩‍💻</div>
+          <div class="avatar-box">
+            <img src="assets/profile/andressa-avatar.png" alt="Retrato de Andressa Duarte em estilo cyberpunk">
+          </div>
         </div>
       </div>
     </div>
